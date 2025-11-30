@@ -32,6 +32,9 @@ if (-not (Test-Path $envFile)) {
     throw "environment.yml not found at $envFile"
 }
 
+$mlDtypesPin = "ml-dtypes==0.4.0"  # keeps TensorFlow 2.18 compatible while avoiding JAX 0.5.x bump
+$jaxVersion = "0.4.28"             # pins JAX to a version that works with ml-dtypes 0.4.x
+
 # Initialize conda for this session
 $condaHook = (& conda "shell.powershell" "hook" 2>$null) -join [Environment]::NewLine
 if (-not $condaHook) { throw "Could not initialize conda PowerShell hook." }
@@ -77,6 +80,7 @@ $pipPkgs = @(
     "typing-extensions==4.15.0",
     "tensorboard==2.18.0",
     "tensorflow==2.18.0",
+    $mlDtypesPin,
     "pyarrow==14.0.2",
     # RL / deps
     "gymnasium==1.1.1",  # matches ray[rllib] constraint
@@ -140,17 +144,17 @@ Ensure-Torch -UseGpu:$gpuAvailable
 # Install JAX
 $isLinuxOrWSL = -not $IsWindows
 if ($gpuAvailable -and $isLinuxOrWSL) {
-    Write-Host "Installing JAX with CUDA 12 support..."
-    Invoke-CmdChecked "pip" @("install","--upgrade","jax[cuda12]","-f","https://storage.googleapis.com/jax-releases/jax_cuda_releases.html")
+    Write-Host "Installing JAX $jaxVersion with CUDA 12 support..."
+    Invoke-CmdChecked "pip" @("install","--upgrade","jax[cuda12]==$jaxVersion","-f","https://storage.googleapis.com/jax-releases/jax_cuda_releases.html")
 } else {
-    Write-Host "Installing JAX CPU build..."
-    Invoke-CmdChecked "pip" @("install","--upgrade","jax[cpu]")
+    Write-Host "Installing JAX CPU build ($jaxVersion)..."
+    Invoke-CmdChecked "pip" @("install","--upgrade","jax[cpu]==$jaxVersion")
 }
 
 # Core Python libs (top-ups)
 Invoke-CmdChecked "pip" @(
     "install","--upgrade","--progress-bar","off",
-    "numpy==1.26.4","pyarrow==14.0.2","gymnasium","tensorboard==2.18.0",
+    "numpy==1.26.4","pyarrow==14.0.2","gymnasium==1.1.1","tensorboard==2.18.0",$mlDtypesPin,
     "pyro-ppl","stable-baselines3","ray[rllib]","requests","tqdm","plotly",
     "openai","telethon"
 ) -AllowedExitCodes @(0,120)

@@ -12,7 +12,11 @@ This repository glues together lightweight quant components (rough volatility, j
 - Launch VS Code from a `Visual Studio 2022 Developer PowerShell v17.14.21` session once the PowerShell install phase is complete (banner: Copyright (c) 2025 Microsoft Corporation) so PATH and toolchain settings are preloaded in the integrated terminal.
 
 ## Quickstart
-1. Install dependencies (conda/venv) and ensure `src` is on `PYTHONPATH`.
+1. From a `Visual Studio 2022 Developer PowerShell v17.14.21`, run the one-shot setup (creates `polyo-gpu`, installs PyTorch, TF 2.18 + JAX 0.4.28 with `ml-dtypes==0.4.0`, editable packages, and builds limit-order-book when MSVC is available):
+   ```pwsh
+   pwsh -NoProfile -ExecutionPolicy Bypass -File .\set_me.ps1
+   ```
+2. Install dependencies (conda/venv) and ensure `src` is on `PYTHONPATH` (the script already exports `PYTHONPATH` for the session).
 2. Train or refresh mock LSTM artifacts (optional, lightweight):
    ```bash
    python -m polyo.lstm_forecaster.train --config config/lstm.yaml
