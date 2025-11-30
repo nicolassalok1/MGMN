@@ -1,0 +1,16 @@
+LICENSE
+README.md
+setup.py
+jumpdiff/__init__.py
+jumpdiff/binning.py
+jumpdiff/formulae.py
+jumpdiff/jd_process.py
+jumpdiff/kernels.py
+jumpdiff/moments.py
+jumpdiff/parameters.py
+jumpdiff/q_ratio.py
+jumpdiff.egg-info/PKG-INFO
+jumpdiff.egg-info/SOURCES.txt
+jumpdiff.egg-info/dependency_links.txt
+jumpdiff.egg-info/requires.txt
+jumpdiff.egg-info/top_level.txt

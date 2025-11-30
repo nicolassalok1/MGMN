@@ -1,0 +1,10 @@
+.idea
+.vagrant
+research
+.git
+tensorboard
+agents
+data/tensorboard
+data/agents
+data/postgres
+data/reports

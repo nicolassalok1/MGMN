@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"terminal.integrated.profiles.windows": {
+			"Developer PowerShell VS2022": {
+				"path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+				"args": [
+					"-NoLogo",
+					"-NoExit",
+					"-ExecutionPolicy",
+					"Bypass",
+					"-File",
+					"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\Launch-VsDevShell.ps1",
+					"-Arch",
+					"amd64",
+					"-HostArch",
+					"amd64"
+				],
+				"icon": "terminal-powershell"
+			}
+		},
+		"terminal.integrated.defaultProfile.windows": "Developer PowerShell VS2022"
+	}
+}
