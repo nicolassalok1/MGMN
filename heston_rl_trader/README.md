@@ -97,54 +97,5 @@ Les modules sont isolés → zéro friction.
 
  Intégration backtest live.
 
-License
-
-MIT License.
 
 
----
-
-# 2. `.gitignore` (complet, pro)
-
-```gitignore
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Environnements
-venv/
-.env/
-*.env
-
-# Logs
-*.log
-logs/
-wandb/
-
-# Checkpoints / Poids
-*.ckpt
-*.pt
-*.pth
-models/*.pt
-models/*.pth
-models/*.ckpt
-
-# Notebooks
-.ipynb_checkpoints/
-
-# Data
-data/*.csv
-data/*.npz
-data/cache/
-data/*.pickle
-*.npy
-
-# PyTorch / Lightning
-lightning_logs/
-tensorboard/
-
-# OS
-.DS_Store
-Thumbs.db
