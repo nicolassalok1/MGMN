@@ -1,1 +1,0 @@
-environment = dict(type="HighFrequencyTradingEnvironment", )

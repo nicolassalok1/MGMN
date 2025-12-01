@@ -1,4 +1,0 @@
-
-transition = dict(
-    type = "Transition"
-)

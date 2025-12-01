@@ -1,4 +1,0 @@
-
-loss = dict(
-    type = "MSELoss"
-)

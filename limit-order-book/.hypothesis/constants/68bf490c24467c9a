@@ -1,4 +1,0 @@
-# file: /Users/muneermamnoon/GitHub Projects/limit-order-book/python/lob/__init__.py
-# hypothesis_version: 6.138.2
-
-['Book', 'ExecResult', 'FOK', 'IOC', 'ModifyOrder', 'NewOrder', 'POST_ONLY', 'STP', 'Side']

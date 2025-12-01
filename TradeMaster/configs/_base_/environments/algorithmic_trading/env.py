@@ -1,3 +1,0 @@
-environment = dict(
-    type = "AlgorithmicTradingEnvironment",
-)

@@ -1,9 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"D:/PythonDProjects/POLYO/limit-order-book/cpp/build/cmake_install.cmake",
-		"D:/PythonDProjects/POLYO/limit-order-book/cpp/build/tools/cmake_install.cmake",
-		"D:/PythonDProjects/POLYO/limit-order-book/cpp/build/_deps/pybind11-build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

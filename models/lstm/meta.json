@@ -1,5 +1,0 @@
-{
-  "input_dim": 2,
-  "hidden_dim": 8,
-  "note": "Placeholder metadata for the POLYO LSTM forecaster. Regenerate via `python -m polyo.lstm_forecaster.train`."
-}

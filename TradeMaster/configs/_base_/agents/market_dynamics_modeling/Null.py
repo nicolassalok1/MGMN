@@ -1,4 +1,0 @@
-
-agent = dict(
-    type = "Null",
-)
