@@ -1,33 +1,150 @@
-# Heston RL Trader
+Raw Market Data
+├── Shitcoin Feature Module (pseudo-surface → Heston embedding)
+├── BTC Heston Module (IV surface réelle → Heston params)
+├── Sentiment Module
+└── Generic OHLCV Module
+↓
+FeatureEngine (fusion)
+↓
+StateBuilder (normalisation + stacking temporel)
+↓
+RL Agent (PPO)
+↓
+TradingEnv (backtest / simulated / live)
 
-Prototype d'agent PPO pour trader un sous-jacent simulé par un modèle de Heston. Le pipeline génère des prix, extrait des features, construit un état pour l'agent et entraîne un PPO léger en PyTorch.
 
-## Installation
-1. Créez un environnement virtuel Python 3.10+ puis activez-le.
-2. Installez les dépendances :
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-## Structure
-- `models/heston_inverse_model.py` : simulation Heston et estimation rudimentaire de variance réalisée.
-- `data/simulated_data.py` : génération de séries synthétiques et split train/test.
-- `features/feature_engine.py` : calcul des features (log-return, moyennes mobiles, vol, z-score).
-- `features/state_builder.py` : construction de l'état fenêtré pour l'agent.
-- `env/trading_env.py` : environnement Gymnasium avec positions short/flat/long et coûts de transaction.
-- `rl/ppo_agent.py` : implémentation PPO minimaliste (acteur-critique MLP).
-- `train_ppo.py` : script d'entraînement et évaluation simple.
+## 📦 Structure du projet
 
-## Lancer un entraînement
-Depuis le dossier parent (celui qui contient `heston_rl_trader/`) :
-```bash
-python -m heston_rl_trader.train_ppo --episodes 5 --steps-per-update 512
-```
-Arguments utiles :
-- `--episodes` : nombre d'épisodes d'entraînement.
-- `--steps-per-update` : taille du buffer avant mise à jour des gradients PPO.
 
-## Notes
-- Le simulateur Heston utilise une discrétisation d'Euler basique et une calibration très simple sur la variance réalisée. Pour des besoins de recherche ou de production, raffiner la calibration et la génération de trajectoires.
-- L'environnement repose sur un mapping discret {-1, 0, 1} (short, flat, long) et récompense par log-return ajusté du coût de transaction.
-- Cette base est volontairement légère pour itérer rapidement : ajoutez sauvegarde de modèle, suivi tensorboard et backtests réels selon vos besoins.
+
+heston_rl_trader/
+├─ models/
+│ └─ heston_inverse_model.py
+├─ features/
+│ ├─ feature_engine.py
+│ └─ state_builder.py
+├─ data/
+│ └─ simulated_data.py
+├─ env/
+│ └─ trading_env.py
+├─ rl/
+│ └─ ppo_agent.py
+├─ train_ppo.py
+└─ requirements.txt
+
+
+---
+
+## 🚀 Installation
+
+
+
+git clone <votre_repo>
+cd heston_rl_trader
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+
+---
+
+## ▶️ Entraînement PPO
+
+Le script `train_ppo.py` :
+
+- génère un marché simulé BTC + Shitcoin,
+- initialise les inverseurs Heston (dummy si pas de poids),
+- construit le pipeline complet,
+- lance un entraînement PPO full RL.
+
+
+
+python train_ppo.py
+
+
+---
+
+## 🔥 Remplacer les inverseurs Heston
+
+Dans `train_ppo.py` :
+
+```python
+btc_model = load_heston_inverse_model(
+    nk=5, nt=4, ckpt_path="models/btc_heston.ckpt"
+)
+
+
+Téléchargez/entraînez vos poids et placez-les dans le dossier models/.
+
+📁 Données réelles
+
+Remplacez facilement simulated_data.py par un loader réel
+(Crypto/Deribit/FTX/Binance/on-chain).
+
+Les modules sont isolés → zéro friction.
+
+🏗 Roadmap
+
+ Ajouter les contraintes de risque (vol targeting, max leverage).
+
+ Layer de sentiment réel (BERT/distilBERT).
+
+ Calibration Heston réelle sur surface Deribit.
+
+ Passage GPU complet du pipeline (entirely on CUDA).
+
+ Intégration backtest live.
+
+License
+
+MIT License.
+
+
+---
+
+# 2. `.gitignore` (complet, pro)
+
+```gitignore
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environnements
+venv/
+.env/
+*.env
+
+# Logs
+*.log
+logs/
+wandb/
+
+# Checkpoints / Poids
+*.ckpt
+*.pt
+*.pth
+models/*.pt
+models/*.pth
+models/*.ckpt
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Data
+data/*.csv
+data/*.npz
+data/cache/
+data/*.pickle
+*.npy
+
+# PyTorch / Lightning
+lightning_logs/
+tensorboard/
+
+# OS
+.DS_Store
+Thumbs.db
